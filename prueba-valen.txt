@@ -1,2 +1,0 @@
-Primera prueba de Git y GitHub.
-Este archivo fue creado por Valen.
