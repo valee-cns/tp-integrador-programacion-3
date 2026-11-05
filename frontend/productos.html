@@ -4,18 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productos | LV - Loot Valley</title>
+    <link rel="stylesheet" href="/css/productos.css">
 </head>
 <body>
     <header>
         <h1>LV - Loot Valley</h1>
+        <p>Trabajo de Valen y Lian — Programación III</p>
+
         <nav>
             <a href="/">Volver a bienvenida</a>
         </nav>
     </header>
 
     <main>
-        <h2>Productos</h2>
-        <p>Próximamente: Magic y videojuegos.</p>
+        <h2>Catálogo</h2>
+
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" disabled>
+            <option value="">Todas</option>
+        </select>
+
+        <p id="mensaje" role="status"></p>
+
+        <section id="productos" aria-label="Productos disponibles"></section>
+
+        <div class="paginacion">
+            <button id="anterior" type="button" disabled>Anterior</button>
+            <span id="info-pagina"></span>
+            <button id="siguiente" type="button" disabled>Siguiente</button>
+        </div>
     </main>
+
+    <script src="/js/productos.js"></script>
 </body>
 </html>
