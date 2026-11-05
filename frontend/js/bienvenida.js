@@ -11,6 +11,8 @@ formulario.addEventListener("submit", (evento) =>{
         campoNombre.focus();
         return;
     }
-    alert(`¡Bienvenido a Loot Valley, ${nombre}!`);
+
+    sessionStorage.setItem("nombreCliente", nombre);
+
     window.location.href = "/productos.html";
 });

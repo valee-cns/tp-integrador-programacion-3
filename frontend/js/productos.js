@@ -4,10 +4,17 @@ const mensaje = document.getElementById("mensaje");
 const botonAnterior = document.getElementById("anterior");
 const botonSiguiente = document.getElementById("siguiente");
 const infoPagina = document.getElementById("info-pagina");
+const nombreCliente = sessionStorage.getItem("nombreCliente");
+const saludoCliente = document.getElementById("saludo-cliente");
+const cantidadCarrito = document.getElementById("cantidad-carrito");
 
 let paginaActual = 1;
 let totalPaginas = 0;
 const LIMITE = 3;
+
+function actualizarCantidadCarrito(){
+    cantidadCarrito.textContent = obtenerCantidadCarrito();
+}
 
 async function cargarCategorias() {
     const respuesta = await fetch("/api/categorias");
@@ -45,9 +52,38 @@ function crearTarjeta(producto) {
         currency: "ARS"
     });
 
+    const botonAgregar = document.createElement("button");
+    botonAgregar.type = "button";
+    botonAgregar.textContent = "Agregar al carrito";
+
+    const botonQuitar = document.createElement("button");
+    botonQuitar.type = "button";
+    botonQuitar.textContent = "Quitar del carrito";
+
+    function actualizarBotonQuitar(){
+        const estaEnCarrito = obtenerCarrito().some((item) => item.id === producto.id);
+        botonQuitar.hidden = !estaEnCarrito;
+    }
+
+    botonAgregar.addEventListener("click", () => {
+        agregarAlCarrito(producto);
+        actualizarCantidadCarrito();
+        actualizarBotonQuitar();
+    });
+
+    botonQuitar.addEventListener("click", () => {
+        quitarDelCarrito(producto.id);
+        actualizarCantidadCarrito();
+        actualizarBotonQuitar();
+    })
+
+    actualizarBotonQuitar();
+
     tarjeta.appendChild(nombre);
     tarjeta.appendChild(descripcion);
     tarjeta.appendChild(precio);
+    tarjeta.appendChild(botonAgregar);
+    tarjeta.appendChild(botonQuitar);
 
     return tarjeta;
 }
@@ -129,4 +165,10 @@ async function iniciarCatalogo() {
     }
 }
 
-iniciarCatalogo();
+if (nombreCliente === null || nombreCliente.trim() === "") {
+    window.location.replace("/");
+} else {
+    saludoCliente.textContent = `¡Hola, ${nombreCliente}! Elegí tus productos.`;
+    actualizarCantidadCarrito();
+    iniciarCatalogo();
+}

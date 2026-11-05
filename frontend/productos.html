@@ -13,11 +13,18 @@
 
         <nav>
             <a href="/">Volver a bienvenida</a>
+            <a href="/carrito.html">Ver carrito</a>
         </nav>
     </header>
 
     <main>
         <h2>Catálogo</h2>
+
+        <p id="saludo-cliente"></p>
+        <p>
+            Unidades en el carrito:
+            <span id="cantidad-carrito">0</span>
+        </p>
 
         <label for="categoria">Categoría:</label>
         <select id="categoria" disabled>
@@ -35,6 +42,7 @@
         </div>
     </main>
 
+    <script src="/js/carrito.js"></script>
     <script src="/js/productos.js"></script>
 </body>
 </html>

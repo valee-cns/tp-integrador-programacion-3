@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito | LV - Loot Valley</title>
+    <link rel="stylesheet" href="/css/productos.css">
+</head>
+<body>
+    <header>
+        <h1>LV - Loot Valley</h1>
+        <p>Trabajo de Valen y Lian — Programación III</p>
+
+        <nav>
+            <a href="/productos.html">Seguir comprando</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Tu carrito</h2>
+        <p id="cliente-carrito"></p>
+        <p id="mensaje-carrito" role="status"></p>
+
+        <section
+            id="lista-carrito"
+            aria-label="Productos seleccionados"
+        ></section>
+
+        <p>Total: <strong id="total-carrito"></strong></p>
+    </main>
+
+    <script src="/js/carrito.js"></script>
+    <script src="/js/pantallaCarrito.js"></script>
+</body>
+</html>
