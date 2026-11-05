@@ -4,6 +4,9 @@ const PUERTO = 3000;
 const path = require("path");
 const sequelize = require("./config/database");
 const { Categoria, Producto } = require("./models");
+const apiRoutes = require("./routes/apiRoutes");
+
+app.use("/api", apiRoutes);
 
 app.use(express.static(path.join(__dirname, "..", "frontend")));
 
