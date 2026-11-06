@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | LV - Loot Valley</title>
+    <link rel="stylesheet" href="/css/productos.css">
+</head>
+<body>
+    <header>
+        <h1>LV - Loot Valley</h1>
+        <p>Trabajo de Valen y Lian — Programación III</p>
+
+        <nav>
+            <a href="/">Volver a bienvenida</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Ingreso de administradores</h2>
+
+        <p id="mensaje-login" role="alert"><%= error || "" %></p>
+
+        <form id="formulario-login">
+            <div>
+                <label for="correo">Correo:</label>
+                <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    autocomplete="username"
+                    maxlength="254"
+                    required
+                >
+            </div>
+
+            <div>
+                <label for="password">Contraseña:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button id="ingresar" type="submit">Ingresar</button>
+            <button id="acceso-prueba" type="button">Acceso rápido</button>
+        </form>
+    </main>
+
+    <script src="/js/login.js"></script>
+</body>
+</html>
