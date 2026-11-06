@@ -27,6 +27,18 @@
         ></section>
 
         <p>Total: <strong id="total-carrito"></strong></p>
+
+        <button id="finalizar-compra" type="button">Finalizar compra</button>
+
+        <dialog id="confirmacion-compra" aria-labelledby="titulo-confirmacion">
+            <h2 id="titulo-confirmacion">Confirmar compra</h2>
+            
+            <p>¿Querés confirmar los productos de tu carrito?</p>
+            <p id="error-compra" role="alert"></p>
+
+            <button id="cancelar-compra" type="button">Cancelar</button>
+            <button id="confirmar-compra" type="button">Confirmar compra</button>
+        </dialog>
     </main>
 
     <script src="/js/carrito.js"></script>

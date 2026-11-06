@@ -2,6 +2,13 @@ const clienteCarrito = document.getElementById("cliente-carrito");
 const mensajeCarrito = document.getElementById("mensaje-carrito");
 const listaCarrito = document.getElementById("lista-carrito");
 const totalCarrito = document.getElementById("total-carrito");
+const botonFinalizar = document.getElementById("finalizar-compra");
+const dialogoConfirmacion = document.getElementById("confirmacion-compra");
+const botonCancelar = document.getElementById("cancelar-compra");
+const botonConfirmar = document.getElementById("confirmar-compra");
+const errorCompra = document.getElementById("error-compra");
+
+let enviandoCompra = false;
 
 function mostrarImporte(importe){
     return importe.toLocaleString("es-AR",{
@@ -12,6 +19,7 @@ function mostrarImporte(importe){
 
 function mostrarCarrito(){
     const carrito = obtenerCarrito();
+    botonFinalizar.disabled = carrito.length === 0;
 
     listaCarrito.replaceChildren();
     let total = 0;
@@ -84,6 +92,81 @@ function mostrarCarrito(){
 
     totalCarrito.textContent = mostrarImporte(total);
 }
+
+botonFinalizar.addEventListener("click", () => {
+    if (obtenerCarrito().length === 0 || enviandoCompra){
+        return;
+    }
+
+    errorCompra.textContent = "";
+    dialogoConfirmacion.showModal();
+});
+
+botonCancelar.addEventListener("click", () => {
+    dialogoConfirmacion.close();
+});
+
+dialogoConfirmacion.addEventListener("cancel", (evento) => {
+    if (enviandoCompra){
+        evento.preventDefault();
+    }
+});
+
+botonConfirmar.addEventListener("click", async () => {
+    if (enviandoCompra){
+        return;
+    }
+
+    const carrito = obtenerCarrito();
+
+    if (carrito.length === 0){
+        errorCompra.textContent = "El carrito está vacío.";
+        return;
+    }
+
+    enviandoCompra = true;
+    botonConfirmar.disabled = true;
+    botonCancelar.disabled = true;
+    botonFinalizar.disabled = true;
+    errorCompra.textContent = "";
+
+    try {
+        const respuesta = await fetch("/api/ventas", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nombreCliente,
+                productos: carrito.map((producto) => ({
+                    productoId: producto.id,
+                    cantidad: producto.cantidad
+                }))
+            })
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(datos.error || "No se pudo registrar la compra.");
+        }
+
+        sessionStorage.setItem("ultimaVentaId", String(datos.ventaId));
+        guardarCarrito([]);
+
+        dialogoConfirmacion.close();
+        mostrarCarrito();
+
+        mensajeCarrito.textContent = `Venta ${datos.ventaId} registrada correctamente.`;
+    } catch (error) {
+        errorCompra.textContent = error.message;
+    } finally {
+        enviandoCompra = false;
+        botonConfirmar.disabled = false;
+        botonCancelar.disabled = false;
+        botonFinalizar.disabled = obtenerCarrito().length === 0;
+    }
+});
 
 const nombreCliente = sessionStorage.getItem("nombreCliente");
 
