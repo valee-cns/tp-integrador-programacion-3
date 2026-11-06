@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket | LV - Loot Valley</title>
+    <link rel="stylesheet" href="/css/productos.css">
+</head>
+<body>
+    <header>
+        <h1>LV - Loot Valley</h1>
+        <p>Trabajo de Valen y Lian — Programación III</p>
+
+        <nav>
+            <button id="salir" type="button">Salir</button>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Ticket de compra</h2>
+        <p id="mensaje-ticket" role="status">Cargando ticket...</p>
+
+        <section id="datos-ticket" hidden>
+            <p id="numero-venta"></p>
+            <p id="nombre-cliente"></p>
+            <p id="fecha-venta"></p>
+
+            <div id="detalle-ticket"></div>
+
+            <p>Total: <strong id="total-venta"></strong></p>
+            <a id="descargar-pdf">Descargar ticket en PDF</a>
+        </section>
+    </main>
+
+    <script src="/js/ticket.js"></script>
+</body>
+</html>

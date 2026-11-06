@@ -154,10 +154,7 @@ botonConfirmar.addEventListener("click", async () => {
         sessionStorage.setItem("ultimaVentaId", String(datos.ventaId));
         guardarCarrito([]);
 
-        dialogoConfirmacion.close();
-        mostrarCarrito();
-
-        mensajeCarrito.textContent = `Venta ${datos.ventaId} registrada correctamente.`;
+        window.location.replace("/ticket.html");
     } catch (error) {
         errorCompra.textContent = error.message;
     } finally {

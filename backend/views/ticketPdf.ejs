@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket de compra</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #222;
+            font-size: 14px;
+        }
+
+        h1 {
+            color: #59368c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .importe {
+            text-align: right;
+        }
+
+        .total {
+            font-size: 18px;
+            text-align: right;
+            margin-top: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>LV – Loot Valley</h1>
+    <p>Valen y Lian — Programación III</p>
+
+    <h2>Ticket de compra</h2>
+
+    <p>Venta número: <%= venta.id %></p>
+    <p>Cliente: <%= venta.nombreCliente %></p>
+    <p>Fecha: <%= fechaFormateada %></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th class="importe">Precio unitario</th>
+                <th class="importe">Subtotal</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% for (const detalle of venta.DetalleVenta) { %>
+                <tr>
+                    <td><%= detalle.Producto.nombre %></td>
+                    <td><%= detalle.cantidad %></td>
+
+                    <td class="importe">
+                        <%= mostrarImporte(detalle.precioUnitario) %>
+                    </td>
+
+                    <td class="importe">
+                        <%= mostrarImporte(
+                            Number(detalle.precioUnitario) * detalle.cantidad
+                        ) %>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <p class="total">
+        Total: <strong><%= mostrarImporte(venta.total) %></strong>
+    </p>
+
+    <p>¡Gracias por tu compra!</p>
+</body>
+</html>
