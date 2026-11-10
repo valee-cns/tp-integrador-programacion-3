@@ -5,8 +5,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f3f8;
-    color: #252033;
+    background-color: var(--fondo);
+    color: var(--texto);
 }
 
 header {
@@ -20,7 +20,7 @@ header h1 {
 }
 
 nav a {
-    color: white;
+    color: var(--enlace);
 }
 
 main {
@@ -44,8 +44,8 @@ button {
 .producto {
     min-width: 0;
     padding: 20px;
-    background-color: white;
-    border: 1px solid #d9d3e3;
+    background-color: var(--superficie);
+    border: 1px solid var(--borde);
     border-radius: 12px;
     overflow-wrap: anywhere;
 }
@@ -66,15 +66,6 @@ button {
     flex-wrap: wrap;
     gap: 16px;
     margin-top: 24px;
-}
-
-button {
-    cursor: pointer;
-}
-
-button:disabled {
-    cursor: default;
-    opacity: 0.5;
 }
 
 .imagen-producto {

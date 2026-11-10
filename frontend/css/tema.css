@@ -1,0 +1,50 @@
+:root {
+    color-scheme: light;
+    --fondo: #f3eff8;
+    --texto: #241a30;
+    --superficie: #ffffff;
+    --borde: #d7cce3;
+    --enlace: #56238a;
+    --boton-fondo: #56238a;
+    --boton-texto: #ffffff;
+    --boton-hover: #43196d;
+    --boton-deshabilitado: #ddd5e5;
+    --boton-texto-deshabilitado: #655b70;
+}
+
+:root[data-tema="oscuro"] {
+    color-scheme: dark;
+    --fondo: #1c1526;
+    --texto: #f4ecfa;
+    --superficie: #2c213a;
+    --borde: #655572;
+    --enlace: #d6b4ff;
+    --boton-fondo: #56238a;
+    --boton-texto: #ffffff;
+    --boton-hover: #43196d;
+    --boton-deshabilitado: #ddd5e5;
+    --boton-texto-deshabilitado: #655b70;
+}
+
+button {
+    background-color: var(--boton-fondo);
+    color: var(--boton-texto);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    background-color: var(--boton-hover);
+}
+
+button:disabled {
+    background-color: var(--boton-deshabilitado);
+    color: var(--boton-texto-deshabilitado);
+    cursor: not-allowed;
+}
+
+button:focus-visible {
+    outline: 2px solid var(--enlace);
+    outline-offset: 3px;
+}

@@ -128,4 +128,31 @@ async function obtenerVenta(req, res) {
     }
 }
 
-module.exports = { registrarVenta, obtenerVenta };
+async function listarVentas(req, res) {
+    try {
+        const ventas = await Venta.findAll({
+            include: [
+                {
+                    model: DetalleVenta,
+                    include: [
+                        {
+                            model: Producto,
+                            attributes: ["id", "nombre"]
+                        }
+                    ]
+                }
+            ],
+            order: [["id", "DESC"]]
+        });
+
+        return res.json(ventas);
+    } catch (error) {
+        console.error("Error al listar ventas:", error);
+
+        return res.status(500).json({
+            error: "No se pudieron listar las ventas."
+        });
+    }
+}
+
+module.exports = { registrarVenta, obtenerVenta, listarVentas };
