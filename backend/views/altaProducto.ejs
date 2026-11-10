@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel administrativo | LV - Loot Valley</title>
+    <link rel="stylesheet" href="/css/productos.css">
+</head>
+<body>
+    <main>
+        <h1>Nuevo producto</h1>
+        <a href="/admin/dashboard">Volver al panel</a>
+
+        <form action="/admin/productos" method="post" enctype="multipart/form-data">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" required>
+
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" required></textarea>
+
+            <label for="precio">Precio</label>
+            <input id="precio" name="precio" type="number"
+                min="0.01" step="0.01" required>
+
+            <label for="categoriaId">Categoría</label>
+            <select id="categoriaId" name="categoriaId" required>
+                <option value="">Elegí una categoría</option>
+                <% for (const categoria of categorias) { %>
+                    <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
+                <% } %>
+            </select>
+
+            <label for="imagen">Imagen</label>
+            <input id="imagen" name="imagen" type="file" accept="image/jpeg,image/png" required>
+            <button type="submit">Guardar producto</button>
+        </form>
+    </main>
+</body>
+</html>

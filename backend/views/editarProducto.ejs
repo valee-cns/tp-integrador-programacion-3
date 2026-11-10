@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel administrativo | LV - Loot Valley</title>
+    <link rel="stylesheet" href="/css/productos.css">
+</head>
+<body>
+    <main>
+        <h1>Editar producto</h1>
+        <a href="/admin/dashboard">Volver al panel</a>
+
+        <form action="/admin/productos/<%= producto.id %>/editar" method="post" enctype="multipart/form-data">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" value="<%= producto.nombre %>" required>
+
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" required><%= producto.descripcion %></textarea>
+
+            <label for="precio">Precio</label>
+            <input id="precio" name="precio" type="number" min="0.01" step="0.01" value="<%= producto.precio %>" required>
+
+            <label for="categoriaId">Categoría</label>
+            <select id="categoriaId" name="categoriaId" required>
+                <% for (const categoria of categorias) { %>
+                    <option value="<%= categoria.id %>"
+                        <% if (categoria.id === producto.categoriaId) { %>selected<% } %>>
+                        <%= categoria.nombre %>
+                    </option>
+                <% } %>
+            </select>
+
+            <p>Imagen</p>
+            <% if (producto.imagen && producto.imagen !== "/img/producto-pendiente.png") { %>
+                <img src="<%= producto.imagen %>" alt="Imagen de <%= producto.nombre %>" width="160">
+            <% } else { %>
+                <p>Sin imagen cargada.</p>
+            <% } %>
+            <label for="imagen">Nueva imagen (opcional)</label>
+            <input id="imagen" name="imagen" type="file" accept="image/jpeg,image/png">
+            <button type="submit">Guardar producto</button>
+        </form>
+    </main>
+</body>
+</html>

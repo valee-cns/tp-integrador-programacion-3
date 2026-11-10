@@ -19,6 +19,7 @@
 
     <main>
         <h2>Panel administrativo</h2>
+        <a href="/admin/productos/nuevo">Nuevo producto</a>
         <p>Administrador: <%= administrador.correo %></p>
         <p id="mensaje-panel" role="alert"></p>
 
@@ -51,11 +52,31 @@
                             Estado:
                             <%= producto.activo ? "Activo" : "Inactivo" %>
                         </p>
+                        <button
+                            type="button"
+                            class="cambiar-estado"
+                            data-id="<%= producto.id %>"
+                            data-activo="<%= producto.activo ? 'false' : 'true' %>"
+                        >
+                            <%= producto.activo ? "Desactivar" : "Reactivar" %>
+                        </button>
+                        <a href="/admin/productos/<%= producto.id %>/editar">Editar</a>
                     </article>
                 <% } %>
             </section>
         <% } %>
     </main>
+
+    <dialog id="confirmar-estado" aria-labelledby="titulo-confirmar-estado">
+        <h2 id="titulo-confirmar-estado">Cambiar el estado del producto</h2>
+        <p id="pregunta-estado"></p>
+
+        <form method="dialog">
+            <button type="submit" value="cancelar">Cancelar</button>
+            <button type="submit" value="confirmar">Confirmar</button>
+        </form>
+    </dialog>
+
     <script src="/js/admin.js"></script>
 </body>
 </html>
