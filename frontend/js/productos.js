@@ -39,6 +39,21 @@ function crearTarjeta(producto) {
     const tarjeta = document.createElement("article");
     tarjeta.className = "producto";
 
+    const espacioImagen = document.createElement("div");
+    espacioImagen.className = "imagen-producto";
+
+    if (producto.imagen) {
+        const imagen = document.createElement("img");
+        imagen.alt = producto.nombre;
+        imagen.addEventListener("error", () => {
+            espacioImagen.textContent = "Sin imagen";
+        });
+        imagen.src = producto.imagen;
+        espacioImagen.appendChild(imagen);
+    } else {
+        espacioImagen.textContent = "Sin imagen";
+    }
+
     const nombre = document.createElement("h3");
     nombre.textContent = producto.nombre;
 
@@ -52,6 +67,8 @@ function crearTarjeta(producto) {
         currency: "ARS"
     });
 
+    const controlesCantidad = document.createElement("div");
+
     const botonAgregar = document.createElement("button");
     botonAgregar.type = "button";
     botonAgregar.textContent = "Agregar al carrito";
@@ -60,30 +77,66 @@ function crearTarjeta(producto) {
     botonQuitar.type = "button";
     botonQuitar.textContent = "Quitar del carrito";
 
-    function actualizarBotonQuitar(){
-        const estaEnCarrito = obtenerCarrito().some((item) => item.id === producto.id);
-        botonQuitar.hidden = !estaEnCarrito;
-    }
+    const botonRestar = document.createElement("button");
+    botonRestar.type = "button";
+    botonRestar.textContent = "−";
+    botonRestar.setAttribute("aria-label", `Quitar una unidad de ${producto.nombre}`);
+
+    const cantidad = document.createElement("span");
+    cantidad.setAttribute("aria-live", "polite");
+
+    const botonSumar = document.createElement("button");
+    botonSumar.type = "button";
+    botonSumar.textContent = "+";
+    botonSumar.setAttribute("aria-label", `Agregar una unidad de ${producto.nombre}`);
 
     botonAgregar.addEventListener("click", () => {
         agregarAlCarrito(producto);
+        actualizarControles();
         actualizarCantidadCarrito();
-        actualizarBotonQuitar();
     });
 
     botonQuitar.addEventListener("click", () => {
         quitarDelCarrito(producto.id);
+        actualizarControles();
         actualizarCantidadCarrito();
-        actualizarBotonQuitar();
-    })
+    });
 
-    actualizarBotonQuitar();
+    function cantidadDelProducto() {
+        const item = obtenerCarrito().find((item) => item.id === producto.id);
+        return item?.cantidad ?? 0;
+    }
 
-    tarjeta.appendChild(nombre);
-    tarjeta.appendChild(descripcion);
-    tarjeta.appendChild(precio);
-    tarjeta.appendChild(botonAgregar);
-    tarjeta.appendChild(botonQuitar);
+    function actualizarControles() {
+        const unidades = cantidadDelProducto();
+        cantidad.textContent = unidades;
+
+        botonAgregar.hidden = unidades > 0;
+        controlesCantidad.hidden = unidades === 0;
+        botonQuitar.hidden = unidades === 0;
+    }
+
+    botonSumar.addEventListener("click", () => {
+        agregarAlCarrito(producto);
+        actualizarControles();
+        actualizarCantidadCarrito();
+    });
+
+    botonRestar.addEventListener("click", () => {
+        if (cantidadDelProducto() === 1) {
+            quitarDelCarrito(producto.id);
+        } else {
+            cambiarCantidad(producto.id, -1);
+        }
+
+        actualizarControles();
+        actualizarCantidadCarrito();
+    });
+
+    controlesCantidad.append(botonRestar, cantidad, botonSumar);
+    actualizarControles();
+
+    tarjeta.append(espacioImagen, nombre, descripcion, precio, botonAgregar, controlesCantidad, botonQuitar);
 
     return tarjeta;
 }

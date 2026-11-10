@@ -37,6 +37,14 @@
 
                 <% for (const producto of productosCategoria) { %>
                     <article class="producto">
+                        <div class="imagen-producto">
+                            <% if (producto.imagen && producto.imagen !== "/img/producto-pendiente.png") { %>
+                                <img src="<%= producto.imagen %>"
+                                    alt="Imagen de <%= producto.nombre %>">
+                            <% } else { %>
+                                <span>Sin imagen cargada</span>
+                            <% } %>
+                        </div>
                         <h3><%= producto.nombre %></h3>
                         <p><%= producto.descripcion %></p>
 
