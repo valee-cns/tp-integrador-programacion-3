@@ -58,4 +58,17 @@ function consultarSesion(req, res) {
     });
 }
 
-module.exports = { mostrarLogin, iniciarSesion, consultarSesion };
+function cerrarSesion(req, res) {
+    res.clearCookie("tokenAdmin", {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+        path: "/"
+    });
+
+    res.json({
+        mensaje: "Sesión cerrada correctamente."
+    });
+}
+
+module.exports = { mostrarLogin, iniciarSesion, consultarSesion, cerrarSesion };

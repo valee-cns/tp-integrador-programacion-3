@@ -41,7 +41,7 @@ formularioLogin.addEventListener("submit", async (evento) => {
             throw new Error(datos.error || "No se pudo iniciar sesión.");
         }
 
-        window.location.replace("/admin/sesion");
+        window.location.replace("/admin/dashboard");
     } catch (error) {
         mensajeLogin.textContent = error.message;
     } finally {
