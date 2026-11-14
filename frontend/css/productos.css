@@ -111,6 +111,20 @@ a.boton-enlace:focus-visible {
     outline-offset: 3px;
 }
 
+.filtros-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.filtros-panel input {
+    max-width: 100%;
+    padding: 10px;
+    font: inherit;
+}
+
 @media (max-width: 480px) {
     main,
     header {

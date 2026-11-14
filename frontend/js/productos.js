@@ -7,6 +7,9 @@ const infoPagina = document.getElementById("info-pagina");
 const nombreCliente = sessionStorage.getItem("nombreCliente");
 const saludoCliente = document.getElementById("saludo-cliente");
 const cantidadCarrito = document.getElementById("cantidad-carrito");
+const formularioBusqueda = document.querySelector("#formulario-busqueda");
+const buscarProducto = document.querySelector("#buscar-producto");
+let nombreBuscado = "";
 
 let paginaActual = 1;
 let totalPaginas = 0;
@@ -157,6 +160,10 @@ async function cargarProductos() {
             url += `&categoriaId=${selectorCategoria.value}`;
         }
 
+        if (nombreBuscado) {
+            url += `&nombre=${encodeURIComponent(nombreBuscado)}`;
+        }
+
         const respuesta = await fetch(url);
 
         if (!respuesta.ok) {
@@ -189,6 +196,16 @@ async function cargarProductos() {
         selectorCategoria.disabled = false;
     }
 }
+
+formularioBusqueda.addEventListener("submit", (evento) => {
+    evento.preventDefault();
+
+    if (selectorCategoria.disabled) return;
+
+    nombreBuscado = buscarProducto.value.trim();
+    paginaActual = 1;
+    cargarProductos();
+});
 
 selectorCategoria.addEventListener("change", () => {
     paginaActual = 1;

@@ -13,7 +13,7 @@
     <header>
         <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
         <h1>LV - Loot Valley</h1>
-        <p>Trabajo de Valen y Lian — Programación III</p>
+        <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
 
         <nav>
             <a class="boton-enlace" href="/">Ir al autoservicio</a>
@@ -28,8 +28,22 @@
         <p>Administrador: <%= administrador.correo %></p>
         <p id="mensaje-panel" role="alert"></p>
 
+        <div class="filtros-panel">
+            <label for="categoria-panel">Categoría</label>
+            <select id="categoria-panel">
+                <option value="">Todas</option>
+                <% for (const categoria of categorias) { %>
+                    <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
+                <% } %>
+            </select>
+            <label for="buscar-producto">Nombre del producto</label>
+            <input id="buscar-producto" type="search">
+        </div>
+
+        <p id="resultado-filtros-panel" role="status"></p>
+
         <% for (const categoria of categorias) { %>
-            <section>
+            <section data-categoria-id="<%= categoria.id %>">
                 <h2><%= categoria.nombre %></h2>
 
                 <% const productosCategoria = productos.filter(
@@ -50,7 +64,7 @@
                                 <span>Sin imagen cargada</span>
                             <% } %>
                         </div>
-                        <h3><%= producto.nombre %></h3>
+                        <h3 class="nombre-producto"><%= producto.nombre %></h3>
                         <p><%= producto.descripcion %></p>
 
                         <p>

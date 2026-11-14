@@ -1,14 +1,21 @@
 const { Producto } = require("../models");
+const { Op, fn, col, where } = require("sequelize");
 
 async function listarProductos(req, res) {
     try {
-        const { pagina, limite, offset, categoriaId } = req.filtrosProductos;
+        const { pagina, limite, offset, categoriaId, nombre } = req.filtrosProductos;
 
         const condiciones = { activo: true };
 
         if (categoriaId !== undefined) {
             condiciones.categoriaId = categoriaId;
         }
+
+        if (nombre) {
+            condiciones[Op.and] = where(
+                fn("LOCATE", nombre.toLowerCase(), fn("LOWER", col("nombre"))),
+                { [Op.gt]: 0 });
+        }   
 
         const { count, rows } = await Producto.findAndCountAll({
             where: condiciones,

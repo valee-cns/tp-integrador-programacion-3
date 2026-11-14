@@ -1,5 +1,5 @@
 function validarConsultaProductos(req, res, next) {
-    const { pagina = "1", limite = "3", categoriaId } = req.query;
+    const { pagina = "1", limite = "3", categoriaId, nombre = "" } = req.query;
 
     function esEnteroPositivo(valor) {
         return typeof valor === "string"
@@ -33,13 +33,20 @@ function validarConsultaProductos(req, res, next) {
         });
     }
 
+    if (typeof nombre !== "string" || nombre.trim().length > 100) {
+        return res.status(400).json({
+            error: "La búsqueda debe ser un texto de hasta 100 caracteres."
+        });
+    }
+
     req.filtrosProductos = {
         pagina: Number(pagina),
         limite: Number(limite),
         offset: offset,
         categoriaId: categoriaId === undefined
             ? undefined
-            : Number(categoriaId)
+            : Number(categoriaId),
+        nombre: nombre.trim()
     };
 
     next();

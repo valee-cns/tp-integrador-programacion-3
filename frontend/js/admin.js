@@ -1,5 +1,11 @@
 const botonCerrarSesion = document.getElementById("cerrar-sesion");
 const mensajePanel = document.getElementById("mensaje-panel");
+const categoriaPanel = document.querySelector("#categoria-panel");
+const buscarProducto = document.querySelector("#buscar-producto");
+const resultadoFiltrosPanel = document.querySelector("#resultado-filtros-panel");
+const seccionesPanel = document.querySelectorAll("main section[data-categoria-id]");
+const modalEstado = document.getElementById("confirmar-estado");
+const preguntaEstado = document.getElementById("pregunta-estado");
 
 botonCerrarSesion.addEventListener("click", async () => {
     botonCerrarSesion.disabled = true;
@@ -22,9 +28,6 @@ botonCerrarSesion.addEventListener("click", async () => {
         botonCerrarSesion.disabled = false;
     }
 });
-
-const modalEstado = document.getElementById("confirmar-estado");
-const preguntaEstado = document.getElementById("pregunta-estado");
 
 function confirmarCambioEstado(accion) {
     preguntaEstado.textContent = `¿Querés ${accion} este producto?`;
@@ -74,3 +77,38 @@ document.querySelectorAll(".cambiar-estado").forEach((boton) => {
         }
     });
 });
+
+function normalizarNombre(texto) {
+    return texto.trim().toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
+}
+
+function filtrarProductosPanel() {
+    const categoriaElegida = categoriaPanel.value;
+    const nombreBuscado = normalizarNombre(buscarProducto.value);
+    let totalVisible = 0;
+
+    for (const seccion of seccionesPanel) {
+        const coincideCategoria =
+            categoriaElegida === "" || seccion.dataset.categoriaId === categoriaElegida;
+        let visiblesEnCategoria = 0;
+
+        for (const tarjeta of seccion.querySelectorAll(".producto")) {
+            const nombre = tarjeta.querySelector(".nombre-producto").textContent;
+            const visible = coincideCategoria && normalizarNombre(nombre).includes(nombreBuscado);
+
+            tarjeta.hidden = !visible;
+            if (visible) visiblesEnCategoria++;
+        }
+
+        seccion.hidden = visiblesEnCategoria === 0;
+        totalVisible += visiblesEnCategoria;
+    }
+
+    resultadoFiltrosPanel.textContent = totalVisible === 0
+        ? "No se encontraron productos."
+        : `Productos encontrados: ${totalVisible}`;
+}
+
+categoriaPanel.addEventListener("change", filtrarProductosPanel);
+buscarProducto.addEventListener("input", filtrarProductosPanel);
+filtrarProductosPanel();
