@@ -15,6 +15,26 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api", apiRoutes);
+
+app.use("/api", (error, req, res, next) => {
+    if (res.headersSent) {
+        return next(error);
+    }
+
+    if (error.type === "entity.parse.failed") {
+        return res.status(400).json({ error: "El JSON enviado no es válido." });
+    }
+
+    const estado = error.status ?? error.statusCode;
+
+    if (Number.isInteger(estado) && estado >= 400 && estado < 500) {
+        return res.status(estado).json({ error: "No se pudo procesar la solicitud." });
+    }
+
+    console.error("Error en la API:", error);
+    return res.status(500).json({ error: "Ocurrió un error interno." });
+});
+
 app.use("/admin", adminRoutes);
 
 app.use(express.static(path.join(__dirname, "..", "frontend")));

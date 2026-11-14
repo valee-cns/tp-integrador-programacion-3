@@ -2,6 +2,7 @@ const { Categoria, Producto } = require("../models");
 const path = require("node:path");
 const fs = require("node:fs/promises");
 const { randomUUID } = require("node:crypto");
+const responderErrorProducto = require("../utils/responderErrorProducto");
 
 async function mostrarDashboard(req, res) {
     try {
@@ -20,12 +21,7 @@ async function mostrarDashboard(req, res) {
 }
 
 async function cambiarEstadoProducto(req, res) {
-    const id = Number(req.params.id);
-    const activo = req.body?.activo;
-
-    if (!Number.isSafeInteger(id) || id < 1 || typeof activo !== "boolean") {
-        return res.status(400).json({error: "El ID debe ser un entero positivo y el estado debe ser true o false."});
-    }
+    const { id, activo } = req.estadoProductoValidado;
 
     try {
         const producto = await Producto.findByPk(id);
@@ -58,72 +54,24 @@ async function mostrarAltaProducto(req, res, next) {
     }
 }
 
-function obtenerExtensionImagen(buffer) {
-    const firmaPng = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
-    const firmaJpeg = Buffer.from([255, 216, 255]);
-
-    if (buffer.subarray(0, firmaPng.length).equals(firmaPng)) return ".png";
-    if (buffer.subarray(0, firmaJpeg.length).equals(firmaJpeg)) return ".jpg";
-
-    return null;
-}
-
 async function guardarProducto(req, res, next) {
-    const { nombre, descripcion, precio, categoriaId } = req.body ?? {};
-    const extension = req.file && obtenerExtensionImagen(req.file.buffer);
-    const id = req.params.id;
-    const esEdicion = id !== undefined;
-
-    if (typeof nombre !== "string" || !nombre.trim() || nombre.trim().length > 100) {
-        return res.status(400).send("Revisá el nombre del producto");
-    }
-
-    if (typeof descripcion !== "string" || !descripcion.trim()) {
-        return res.status(400).send("Revisá la descripción ingresada");
-    }
-
-    if (
-        typeof precio !== "string" ||
-        !/^\d{1,8}(\.\d{1,2})?$/.test(precio) ||
-        Number(precio) <= 0
-    ) {
-        return res.status(400).send("Revisá el precio del producto");
-    }
-
-    if (
-        typeof categoriaId !== "string" ||
-        !/^\d+$/.test(categoriaId) ||
-        !Number.isSafeInteger(Number(categoriaId)) ||
-        Number(categoriaId) <= 0
-    ) {
-        return res.status(400).send("Revisá la categoría elegida");
-    }
-
-    if ((!esEdicion || req.file) && !extension) {
-        return res.status(400).send("Seleccioná una imagen JPEG o PNG.");
-    }
-
+    const { nombre, descripcion, precio, categoriaId, extension, esEdicion } = req.productoValidado;
+    
     try {
         let producto;
 
         if (esEdicion) {
-            const idProducto = Number(id);
-
-            if (!/^\d+$/.test(id) || !Number.isSafeInteger(idProducto) || idProducto < 1) {
-                return res.status(400).send("El ID de producto no es válido.");
-            }
-
-            producto = await Producto.findByPk(idProducto);
+            producto = await Producto.findByPk(req.idProductoValidado);
 
             if (!producto) {
-                return res.status(404).send("Producto no encontrado.");
+                return responderErrorProducto(req, res, 404, "Producto no encontrado");
             }
         }
 
         const categoria = await Categoria.findByPk(Number(categoriaId));
 
         if (!categoria) {
-            return res.status(400).send("La categoría seleccionada no existe.");
+            return responderErrorProducto(req, res, 400, "La categoría seleccionada no existe");
         }
 
         const datos = {
@@ -151,7 +99,7 @@ async function guardarProducto(req, res, next) {
             if (esEdicion) {
                 await producto.update(datos);
             } else {
-                await Producto.create({ ...datos, activo: true });
+                producto = await Producto.create({ ...datos, activo: true });
             }
         } catch (error) {
             if (rutaNueva) {
@@ -165,6 +113,10 @@ async function guardarProducto(req, res, next) {
             throw error;
         }
 
+        if (req.baseUrl === "/api") {
+            return res.status(esEdicion ? 200 : 201).json(producto);
+        }
+
         return res.redirect(303, "/admin/dashboard");
     } catch (error) {
         next(error);
@@ -172,11 +124,7 @@ async function guardarProducto(req, res, next) {
 }
 
 async function mostrarEdicionProducto(req, res, next) {
-    const id = Number(req.params.id);
-
-    if (!/^\d+$/.test(req.params.id) || !Number.isSafeInteger(id) || id < 1) {
-        return res.status(400).send("El ID de producto no es válido.");
-    }
+    const id = req.idProductoValidado;
 
     try {
         const producto = await Producto.findByPk(id);

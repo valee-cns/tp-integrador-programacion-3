@@ -1,4 +1,5 @@
 const multer = require("multer");
+const responderErrorProducto = require("../utils/responderErrorProducto");
 
 const recibirImagen = multer({
     storage: multer.memoryStorage(),
@@ -13,11 +14,11 @@ const recibirImagen = multer({
 function subirImagenProducto(req, res, next) {
     recibirImagen(req, res, (error) => {
         if (error?.code === "LIMIT_FILE_SIZE") {
-            return res.status(413).send("La imagen debe pesar como máximo 2 MiB.");
+            return responderErrorProducto(req, res, 413, "La imagen es muy pesada");
         }
 
         if (error) {
-            return res.status(400).send("No se pudo recibir el formulario. Volvé a intentarlo.");
+            return responderErrorProducto(req, res, 400, "No se pudo recibir el formulario. Volvé a intentarlo");
         }
 
         next();
