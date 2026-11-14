@@ -9,34 +9,40 @@
     <script src="/js/tema.js"></script>
     <link rel="icon" href="/img/logo-loot-valley.png" type="image/png">
 </head>
-<body>
-    <header>
-        <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
-        <h1>LV - Loot Valley</h1>
-        <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
-        <nav>
+<body class="pagina-bienvenida">
+    <header class="cabecera-bienvenida">
+        <div class="marca-bienvenida">
+            <img src="/img/logo-loot-valley.png" alt="" width="80" height="80">
+            <div class="texto-marca-bienvenida">
+                <h1>LV - Loot Valley</h1>
+                <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+            </div>
+        </div>
+
+        <nav class="acciones-bienvenida">
             <a class="boton-enlace" href="/admin/login">Administración</a>
             <button type="button" id="cambiar-tema">Cambiar tema</button>
         </nav>
     </header>
 
-    <main>
-        <h2>¡Bienvenido a Loot Valley!</h2>
-        <p>Tu próxima aventura empieza acá.</p>
+    <main class="contenido-bienvenida">
+        <section class="tarjeta-bienvenida">
+            <img class="logo-bienvenida"
+                src="/img/logo-loot-valley.png" alt="" width="168" height="168">
+            <h2>¡Bienvenido a Loot Valley!</h2>
+            <p>Tu aventura empieza acá</p>
 
-        <form id="formulario-bienvenida">
-            <label for="nombre-cliente">
-                Ingrese su nombre:
-            </label>
-            <input
-                type="text"
-                id="nombre-cliente"
-                name="nombre"
-                required
-            >
-            <button type="submit">Continuar</button>
-        </form>
+            <form id="formulario-bienvenida">
+                <label class="etiqueta-bienvenida" for="nombre-cliente">
+                    Ingresá tu nombre
+                </label>
+                <input type="text" id="nombre-cliente" name="nombre"
+                    placeholder="Ingresá tu nombre" required>
+                <button type="submit">Comenzar</button>
+            </form>
+        </section>
     </main>
+
     <script src="/js/bienvenida.js"></script>
 </body>
 </html>

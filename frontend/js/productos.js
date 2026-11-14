@@ -13,7 +13,7 @@ let nombreBuscado = "";
 
 let paginaActual = 1;
 let totalPaginas = 0;
-const LIMITE = 3;
+const LIMITE = 6;
 
 function actualizarCantidadCarrito(){
     cantidadCarrito.textContent = obtenerCantidadCarrito();
@@ -180,10 +180,10 @@ async function cargarProductos() {
         }
 
         if (datos.totalProductos === 0) {
-            mensaje.textContent = "No hay productos disponibles.";
+            mensaje.textContent = "No hay productos disponibles";
             infoPagina.textContent = "Sin páginas";
         } else {
-            mensaje.textContent = `${datos.totalProductos} productos disponibles.`;
+            mensaje.textContent = `${datos.totalProductos} productos disponibles`;
             infoPagina.textContent =
                 `Página ${paginaActual} de ${totalPaginas}`;
         }
