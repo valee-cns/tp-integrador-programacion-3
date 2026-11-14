@@ -7,13 +7,21 @@
     <link rel="stylesheet" href="/css/productos.css">
     <link rel="stylesheet" href="/css/tema.css">
     <script src="/js/tema.js"></script>
+    <link rel="icon" href="/img/logo-loot-valley.png" type="image/png">
 </head>
 <body>
-    <main>
-        <h1>Nuevo producto</h1>
-        <a href="/admin/dashboard">Volver al panel</a>
-        <button type="button" id="cambiar-tema">Cambiar tema</button>
+    <header>
+        <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
+        <h1>LV - Loot Valley</h1>
+        <p>Trabajo de Valen y Lian — Programación III</p>
 
+        <nav>
+            <a class="boton-enlace" href="/admin/dashboard">Volver al panel</a>
+            <button type="button" id="cambiar-tema">Cambiar tema</button>
+        </nav>
+    </header>
+    <main>
+        <h2>Nuevo producto</h2>
         <form action="/admin/productos" method="post" enctype="multipart/form-data">
             <label for="nombre">Nombre</label>
             <input id="nombre" name="nombre" required>

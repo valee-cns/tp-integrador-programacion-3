@@ -80,6 +80,37 @@ button {
     object-fit: contain;
 }
 
+#productos > .producto {
+    display: flex;
+    flex-direction: column;
+}
+
+#productos > .producto > .precio {
+    margin-top: auto;
+}
+
+a.boton-enlace,
+header nav a.boton-enlace {
+    display: inline-block;
+    padding: 10px;
+    background-color: var(--boton-fondo);
+    color: var(--boton-texto);
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    text-decoration: none;
+    font: inherit;
+    line-height: normal;
+}
+
+a.boton-enlace:hover {
+    background-color: var(--boton-hover);
+}
+
+a.boton-enlace:focus-visible {
+    outline: 2px solid var(--enlace);
+    outline-offset: 3px;
+}
+
 @media (max-width: 480px) {
     main,
     header {
