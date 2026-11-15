@@ -292,7 +292,7 @@ button {
     font: inherit;
 }
 
-#productos {
+#productos, .pagina-panel .grilla-panel {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
@@ -411,8 +411,7 @@ button {
     font-weight: 700;
 }
 
-a.boton-enlace,
-header nav a.boton-enlace {
+a.boton-enlace {
     display: inline-block;
     padding: 10px;
     background-color: var(--boton-fondo);
@@ -574,6 +573,9 @@ a.boton-enlace:focus-visible {
 
 .resumen-carrito #finalizar-compra {
     width: 100%;
+    padding: 12px;
+    font-weight: 700;
+    --icono-carrito: url("/img/iconos/credit-card.svg");
 }
 
 .distribucion-carrito .seguir-comprando {
@@ -620,6 +622,9 @@ a.boton-enlace:focus-visible {
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    padding: 3px;
+    border: 1px solid var(--catalogo-borde);
+    border-radius: 10px;
 }
 
 #detalle-resumen-carrito {
@@ -704,10 +709,6 @@ a.boton-enlace:focus-visible {
     --icono-carrito: url("/img/iconos/receipt-text.svg");
 }
 
-.resumen-carrito #finalizar-compra {
-    --icono-carrito: url("/img/iconos/credit-card.svg");
-}
-
 .distribucion-carrito .seguir-comprando {
     --icono-carrito: url("/img/iconos/arrow-left.svg");
 }
@@ -728,12 +729,6 @@ a.boton-enlace:focus-visible {
 .resumen-carrito #total-carrito {
     color: var(--acento-carrito);
     font-weight: 700;
-}
-
-.cantidad-producto-carrito {
-    padding: 3px;
-    border: 1px solid var(--catalogo-borde);
-    border-radius: 10px;
 }
 
 .cantidad-producto-carrito button {
@@ -772,11 +767,6 @@ a.boton-enlace:focus-visible {
     background-color: color-mix(in srgb, var(--acento-carrito) 16%, transparent);
 }
 
-.resumen-carrito #finalizar-compra {
-    padding: 12px;
-    font-weight: 700;
-}
-
 .pagina-ticket .contenido-ticket {
     width: calc(100% - 32px);
     max-width: 700px;
@@ -808,6 +798,7 @@ a.boton-enlace:focus-visible {
     padding: 12px 16px;
     text-align: center;
     font-weight: 700;
+    --icono-ticket: url("/img/iconos/file-text.svg");
 }
 
 .contenido-ticket #datos-ticket > :is(#numero-venta, #nombre-cliente, #fecha-venta) {
@@ -895,10 +886,6 @@ a.boton-enlace:focus-visible {
 
 .contenido-ticket #fecha-venta {
     --icono-ticket: url("/img/iconos/calendar-days.svg");
-}
-
-.contenido-ticket #descargar-pdf {
-    --icono-ticket: url("/img/iconos/file-text.svg");
 }
 
 .pagina-ticket #salir {
@@ -1007,12 +994,6 @@ a.boton-enlace:focus-visible {
 
 .pagina-login #mensaje-login:empty {
     margin: 0;
-}
-
-.pagina-panel .grilla-panel {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
 }
 
 .pagina-panel .grilla-panel > .producto:not([hidden]) {
@@ -1182,18 +1163,6 @@ a.boton-enlace:focus-visible {
     }
 }
 
-@media (max-width: 900px) {
-    .pagina-panel .grilla-panel {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 480px) {
-    .pagina-panel .grilla-panel {
-        grid-template-columns: 1fr;
-    }
-}
-
 @media (max-width: 420px) {
     .contenido-ticket #detalle-ticket > .producto {
         grid-template-columns: 56px minmax(0, 1fr);
@@ -1236,7 +1205,7 @@ a.boton-enlace:focus-visible {
 }
 
 @media (max-width: 900px) {
-    #productos {
+    #productos, .pagina-panel .grilla-panel {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -1247,7 +1216,7 @@ a.boton-enlace:focus-visible {
         padding: 16px;
     }
 
-    #productos {
+    #productos, .pagina-panel .grilla-panel {
         grid-template-columns: 1fr;
     }
 }

@@ -19,11 +19,6 @@
     --superficie: #2c213a;
     --borde: #655572;
     --enlace: #d6b4ff;
-    --boton-fondo: #56238a;
-    --boton-texto: #ffffff;
-    --boton-hover: #43196d;
-    --boton-deshabilitado: #ddd5e5;
-    --boton-texto-deshabilitado: #655b70;
 }
 
 button {
