@@ -9,41 +9,75 @@
     <script src="/js/tema.js"></script>
     <link rel="icon" href="/img/logo-loot-valley.png" type="image/png">
 </head>
-<body>
-    <header>
-        <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
-        <h1>LV - Loot Valley</h1>
-        <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+<body class="pagina-catalogo pagina-alta-producto">
+    <header class="cabecera-bienvenida">
+        <div class="marca-bienvenida">
+            <img src="/img/logo-loot-valley.png" alt="" width="80" height="80">
+            <div class="texto-marca-bienvenida">
+                <h1>LV - Loot Valley</h1>
+                <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+            </div>
+        </div>
 
-        <nav>
+        <nav class="acciones-bienvenida">
             <a class="boton-enlace" href="/admin/dashboard">Volver al panel</a>
             <button type="button" id="cambiar-tema">Cambiar tema</button>
         </nav>
     </header>
-    <main>
-        <h2>Nuevo producto</h2>
-        <form action="/admin/productos" method="post" enctype="multipart/form-data">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" required>
 
-            <label for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" required></textarea>
+    <main class="contenido-catalogo">
+        <div class="encabezado-alta-producto">
+            <span class="icono-alta-producto" aria-hidden="true"></span>
 
-            <label for="precio">Precio</label>
-            <input id="precio" name="precio" type="number"
-                min="0.01" step="0.01" required>
+            <div>
+                <h2>Nuevo producto</h2>
+                <p>Completá los datos para agregar un producto al catálogo.</p>
+            </div>
+        </div>
 
-            <label for="categoriaId">Categoría</label>
-            <select id="categoriaId" name="categoriaId" required>
-                <option value="">Elegí una categoría</option>
-                <% for (const categoria of categorias) { %>
-                    <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
-                <% } %>
-            </select>
+        <form class="formulario-alta-producto" action="/admin/productos"
+            method="post" enctype="multipart/form-data">
 
-            <label for="imagen">Imagen</label>
-            <input id="imagen" name="imagen" type="file" accept="image/jpeg,image/png" required>
-            <button type="submit">Guardar producto</button>
+            <div class="fila-alta-producto fila-datos-producto">
+                <div class="campo-alta-producto">
+                    <label for="nombre">Nombre del producto</label>
+                    <input id="nombre" name="nombre" required>
+                </div>
+
+                <div class="campo-alta-producto">
+                    <label for="categoriaId">Categoría</label>
+                    <select id="categoriaId" name="categoriaId" required>
+                        <option value="">Elegí una categoría</option>
+                        <% for (const categoria of categorias) { %>
+                            <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+
+            <div class="campo-alta-producto">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+            </div>
+
+            <div class="fila-alta-producto fila-precio-imagen">
+                <div class="campo-alta-producto">
+                    <label for="precio">Precio</label>
+                    <input id="precio" name="precio" type="number"
+                        min="0.01" step="0.01" required placeholder="$">
+                </div>
+
+                <div class="campo-alta-producto">
+                    <label for="imagen">Imagen del producto</label>
+                    <input id="imagen" name="imagen" type="file"
+                        accept="image/jpeg,image/png" required>
+                </div>
+            </div>
+
+            <div class="acciones-alta-producto">
+                <button type="submit">Guardar producto</button>
+                <a class="boton-enlace" href="/admin/dashboard">Cancelar</a>
+            </div>
         </form>
     </main>
 </body>

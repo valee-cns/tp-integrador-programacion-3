@@ -9,35 +9,44 @@
     <script src="/js/tema.js"></script>
     <link rel="icon" href="/img/logo-loot-valley.png" type="image/png">
 </head>
-<body>
-    <header>
-        <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
-        <h1>LV - Loot Valley</h1>
-        <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+<body class="pagina-catalogo pagina-panel">
+    <header class="cabecera-bienvenida">
+        <div class="marca-bienvenida">
+            <img src="/img/logo-loot-valley.png" alt="" width="80" height="80">
+            <div class="texto-marca-bienvenida">
+                <h1>LV - Loot Valley</h1>
+                <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+            </div>
+        </div>
 
-        <nav>
+        <nav class="acciones-bienvenida">
             <a class="boton-enlace" href="/">Ir al autoservicio</a>
             <button type="button" id="cambiar-tema">Cambiar tema</button>
-            <button id="cerrar-sesion" type="button">Cerrar sesión</button>
+            <button type="button" id="cerrar-sesion">Cerrar sesión</button>
         </nav>
     </header>
 
-    <main>
+    <main class="contenido-catalogo">
         <h2>Panel administrativo</h2>
         <a class="boton-enlace" href="/admin/productos/nuevo">Nuevo producto</a>
         <p>Administrador: <%= administrador.correo %></p>
         <p id="mensaje-panel" role="alert"></p>
 
-        <div class="filtros-panel">
-            <label for="categoria-panel">Categoría</label>
-            <select id="categoria-panel">
-                <option value="">Todas</option>
-                <% for (const categoria of categorias) { %>
-                    <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
-                <% } %>
-            </select>
-            <label for="buscar-producto">Nombre del producto</label>
-            <input id="buscar-producto" type="search">
+        <div class="filtros-catalogo">
+            <div class="filtro-categoria">
+                <label for="categoria-panel">Categoría:</label>
+                <select id="categoria-panel">
+                    <option value="">Todas</option>
+                    <% for (const categoria of categorias) { %>
+                        <option value="<%= categoria.id %>"><%= categoria.nombre %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="filtros-panel">
+                <label for="buscar-producto">Nombre del producto:</label>
+                <input id="buscar-producto" type="search" placeholder="Buscar producto...">
+            </div>
         </div>
 
         <p id="resultado-filtros-panel" role="status"></p>
@@ -53,43 +62,47 @@
                 <% if (productosCategoria.length === 0) { %>
                     <p>No hay productos en esta categoría.</p>
                 <% } %>
+                <div class="grilla-panel">
+                    <% for (const producto of productosCategoria) { %>
+                        <article class="producto">
+                            <div class="imagen-producto">
+                                <% if (producto.imagen && producto.imagen !== "/img/producto-pendiente.png") { %>
+                                    <img src="<%= producto.imagen %>"
+                                        alt="Imagen de <%= producto.nombre %>">
+                                <% } else { %>
+                                    <span>Sin imagen cargada</span>
+                                <% } %>
+                            </div>
+                            <h3 class="nombre-producto"><%= producto.nombre %></h3>
+                            <p><%= producto.descripcion %></p>
 
-                <% for (const producto of productosCategoria) { %>
-                    <article class="producto">
-                        <div class="imagen-producto">
-                            <% if (producto.imagen && producto.imagen !== "/img/producto-pendiente.png") { %>
-                                <img src="<%= producto.imagen %>"
-                                    alt="Imagen de <%= producto.nombre %>">
-                            <% } else { %>
-                                <span>Sin imagen cargada</span>
-                            <% } %>
-                        </div>
-                        <h3 class="nombre-producto"><%= producto.nombre %></h3>
-                        <p><%= producto.descripcion %></p>
+                            <p>
+                                Precio:
+                                <strong>
+                                    <%= Number(producto.precio).toLocaleString(
+                                    "es-AR",
+                                    { style: "currency", currency: "ARS" }) %>
+                                </strong>
+                            </p>
 
-                        <p>
-                            Precio:
-                            <%= Number(producto.precio).toLocaleString(
-                                "es-AR",
-                                { style: "currency", currency: "ARS" }
-                            ) %>
-                        </p>
-
-                        <p>
-                            Estado:
-                            <%= producto.activo ? "Activo" : "Inactivo" %>
-                        </p>
-                        <button
-                            type="button"
-                            class="cambiar-estado"
-                            data-id="<%= producto.id %>"
-                            data-activo="<%= producto.activo ? 'false' : 'true' %>"
-                        >
-                            <%= producto.activo ? "Desactivar" : "Reactivar" %>
-                        </button>
-                        <a class="boton-enlace" href="/admin/productos/<%= producto.id %>/editar">Editar</a>
-                    </article>
-                <% } %>
+                            <p>
+                                Estado:
+                                <strong><%= producto.activo ? "Activo" : "Inactivo" %> </strong>
+                            </p>
+                            <div class="acciones-producto-panel">
+                                <button
+                                    type="button"
+                                    class="cambiar-estado"
+                                    data-id="<%= producto.id %>"
+                                    data-activo="<%= producto.activo ? 'false' : 'true' %>"
+                                >
+                                    <%= producto.activo ? "Desactivar" : "Reactivar" %>
+                                </button>
+                                <a class="boton-enlace" href="/admin/productos/<%= producto.id %>/editar">Editar</a>
+                            </div>
+                        </article>
+                    <% } %>
+                </div>
             </section>
         <% } %>
     </main>

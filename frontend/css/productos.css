@@ -266,7 +266,7 @@ main {
     margin-right: 0.45em;
 }
 
-.contenido-catalogo label[for="categoria"]::before {
+.contenido-catalogo label:is([for="categoria"], [for="categoria-panel"])::before {
     --icono-catalogo: url("/img/iconos/layers.svg");
     margin-right: 0.45em;
 }
@@ -923,6 +923,275 @@ a.boton-enlace:focus-visible {
     min-width: 0;
     min-height: 0;
     object-fit: contain;
+}
+
+.pagina-login .tarjeta-login {
+    width: min(100%, 600px);
+}
+
+.pagina-login .cabecera-bienvenida .boton-enlace {
+    --icono-accion: url("/img/iconos/arrow-left.svg");
+}
+
+.pagina-login #formulario-login {
+    display: grid;
+    gap: 14px;
+}
+
+.pagina-login .campo-login {
+    position: relative;
+}
+
+.pagina-login .campo-login:has(#correo) {
+    --icono-campo: url("/img/iconos/mail.svg");
+}
+
+.pagina-login .campo-login:has(#password) {
+    --icono-campo: url("/img/iconos/lock.svg");
+}
+
+.pagina-login .campo-login::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    background-color: var(--enlace);
+    mask: var(--icono-campo) center / contain no-repeat;
+    pointer-events: none;
+}
+
+.pagina-login #formulario-login :is(input, button) {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 1px solid var(--bienvenida-borde);
+    border-radius: 12px;
+    font: inherit;
+}
+
+.pagina-login #formulario-login input {
+    padding-left: 48px;
+    background-color: var(--bienvenida-campo);
+    color: var(--texto);
+}
+
+.pagina-login #formulario-login input::placeholder {
+    color: var(--bienvenida-texto);
+    opacity: 1;
+}
+
+.pagina-login #formulario-login #ingresar {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.pagina-login #ingresar:not(:disabled) {
+    background-color: var(--bienvenida-boton);
+}
+
+.pagina-login #ingresar:hover:not(:disabled) {
+    filter: brightness(1.12);
+}
+
+.pagina-login #acceso-prueba:not(:disabled) {
+    background-color: transparent;
+    color: var(--enlace);
+}
+
+.pagina-login #acceso-prueba:hover:not(:disabled) {
+    background-color: var(--bienvenida-campo);
+}
+
+.pagina-login #mensaje-login:empty {
+    margin: 0;
+}
+
+.pagina-panel .grilla-panel {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.pagina-panel .grilla-panel > .producto:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+}
+
+.pagina-panel .acciones-producto-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+    text-align: center;
+}
+
+.pagina-panel .acciones-producto-panel > * {
+    flex: 1 1 auto;
+}
+
+.pagina-panel .filtros-catalogo :is(label, select, option, input),
+.pagina-panel #resultado-filtros-panel {
+    font-weight: 700;
+}
+
+.pagina-panel .filtros-catalogo input::placeholder {
+    font-weight: 700;
+}
+
+.pagina-panel .contenido-catalogo section[data-categoria-id] > h2 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
+:root:not([data-tema="oscuro"]) .pagina-panel .grilla-panel .producto > :is(h3, p) {
+    color: var(--boton-fondo);
+}
+
+.pagina-alta-producto .contenido-catalogo {
+    max-width: 880px;
+}
+
+.formulario-alta-producto {
+    display: grid;
+    gap: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--catalogo-borde);
+}
+
+.fila-alta-producto {
+    display: grid;
+    gap: 20px;
+}
+
+.fila-datos-producto {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 3fr);
+}
+
+.fila-precio-imagen {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+}
+
+.campo-alta-producto {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+}
+
+.campo-alta-producto label {
+    font-weight: 700;
+}
+
+.campo-alta-producto :is(input, select, textarea) {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--catalogo-borde);
+    border-radius: 8px;
+    background-color: var(--superficie);
+    color: var(--texto);
+    font: inherit;
+}
+
+.campo-alta-producto textarea {
+    resize: vertical;
+}
+
+.acciones-alta-producto {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--catalogo-borde);
+}
+
+.pagina-alta-producto .acciones-bienvenida a[href="/admin/dashboard"] {
+    --icono-accion: url("/img/iconos/arrow-left.svg");
+}
+
+.encabezado-alta-producto {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 24px);
+    margin-bottom: 18px;
+}
+
+.icono-alta-producto {
+    flex: 0 0 auto;
+    width: clamp(36px, 5vw, 64px);
+    aspect-ratio: 1;
+    background-color: var(--enlace);
+    mask: url("/img/iconos/package-open.svg") center / contain no-repeat;
+}
+
+.encabezado-alta-producto h2 {
+    margin: 0 0 6px;
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    color: var(--texto);
+}
+
+:root:not([data-tema="oscuro"]) .encabezado-alta-producto h2 {
+    color: var(--boton-fondo);
+}
+
+.encabezado-alta-producto p {
+    margin: 0;
+}
+
+.acciones-alta-producto a.boton-enlace {
+    color: var(--enlace);
+    border-color: var(--catalogo-borde);
+    background-color: color-mix(in srgb, var(--enlace) 14%, var(--superficie));
+}
+
+.acciones-alta-producto a.boton-enlace:hover {
+    background-color: color-mix(in srgb, var(--enlace) 22%, var(--superficie));
+}
+
+.pagina-editar-producto .campo-precio-edicion {
+    width: 100%;
+    max-width: 400px;
+}
+
+.pagina-editar-producto .imagen-actual-edicion img {
+    display: block;
+    max-width: min(100%, 200px);
+    max-height: 220px;
+    object-fit: contain;
+}
+
+.pagina-editar-producto .imagen-actual-edicion p {
+    margin: 0;
+}
+
+@media (min-width: 641px) {
+    .pagina-editar-producto .campo-nueva-imagen {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 640px) {
+    .fila-alta-producto {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .pagina-panel .grilla-panel {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .pagina-panel .grilla-panel {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 420px) {
