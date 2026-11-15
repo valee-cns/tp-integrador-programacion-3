@@ -9,31 +9,37 @@
     <script src="/js/tema.js"></script>
     <link rel="icon" href="/img/logo-loot-valley.png" type="image/png">
 </head>
-<body>
-    <header>
-        <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
-        <h1>LV - Loot Valley</h1>
-        <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+<body class="pagina-carrito">
+    <header class="cabecera-bienvenida">
+        <div class="marca-bienvenida">
+            <img src="/img/logo-loot-valley.png" alt="" width="80" height="80">
+            <div class="texto-marca-bienvenida">
+                <h1>LV - Loot Valley</h1>
+                <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+            </div>
+        </div>
 
-        <nav>
-            <a class="boton-enlace" href="/productos.html">Seguir comprando</a>
+        <nav class="acciones-bienvenida">
             <button type="button" id="cambiar-tema">Cambiar tema</button>
         </nav>
     </header>
 
-    <main>
+    <main class="contenido-carrito">
         <h2>Tu carrito</h2>
-        <p id="cliente-carrito"></p>
         <p id="mensaje-carrito" role="status"></p>
 
-        <section
-            id="lista-carrito"
-            aria-label="Productos seleccionados"
-        ></section>
+        <div class="distribucion-carrito">
+            <section id="lista-carrito" aria-label="Productos seleccionados"></section>
 
-        <p>Total: <strong id="total-carrito"></strong></p>
+            <section class="resumen-carrito" aria-labelledby="titulo-resumen-carrito">
+                <h3 id="titulo-resumen-carrito">Resumen de la compra</h3>
+                <ul id="detalle-resumen-carrito"></ul>
+                <p>Total: <strong id="total-carrito"></strong></p>
+                <button id="finalizar-compra" type="button">Finalizar compra</button>
+            </section>
 
-        <button id="finalizar-compra" type="button">Finalizar compra</button>
+            <a class="boton-enlace seguir-comprando" href="/productos.html">Seguir comprando</a>
+        </div>
 
         <dialog id="confirmacion-compra" aria-labelledby="titulo-confirmacion">
             <h2 id="titulo-confirmacion">Confirmar compra</h2>

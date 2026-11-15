@@ -44,7 +44,21 @@ async function cargarTicket(idVenta) {
             const subtotal = document.createElement("p");
             subtotal.textContent = `Subtotal: ${mostrarImporte(Number(detalle.precioUnitario) * detalle.cantidad)}`;
 
-            articulo.append(nombre, cantidades, subtotal);
+            const espacioImagen = document.createElement("div");
+            espacioImagen.className = "imagen-producto-ticket";
+            espacioImagen.textContent = "Sin imagen";
+
+            if (detalle.Producto.imagen) {
+                const imagen = document.createElement("img");
+                imagen.alt = "";
+                imagen.addEventListener("error", () => {
+                    espacioImagen.textContent = "Sin imagen";
+                });
+                imagen.src = detalle.Producto.imagen;
+                espacioImagen.replaceChildren(imagen);
+            }
+
+            articulo.append(espacioImagen, nombre, cantidades, subtotal);
             detalleTicket.appendChild(articulo);
         }
 

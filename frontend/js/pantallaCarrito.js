@@ -1,6 +1,6 @@
-const clienteCarrito = document.getElementById("cliente-carrito");
 const mensajeCarrito = document.getElementById("mensaje-carrito");
 const listaCarrito = document.getElementById("lista-carrito");
+const detalleResumenCarrito = document.getElementById("detalle-resumen-carrito");
 const totalCarrito = document.getElementById("total-carrito");
 const botonFinalizar = document.getElementById("finalizar-compra");
 const dialogoConfirmacion = document.getElementById("confirmacion-compra");
@@ -22,6 +22,7 @@ function mostrarCarrito(){
     botonFinalizar.disabled = carrito.length === 0;
 
     listaCarrito.replaceChildren();
+    detalleResumenCarrito.replaceChildren();
     let total = 0;
 
     mensajeCarrito.textContent = carrito.length === 0 ? "Tu carrito está vacío." : "";
@@ -36,11 +37,26 @@ function mostrarCarrito(){
         const nombre = document.createElement("h3");
         nombre.textContent = producto.nombre;
 
+        const precioUnitario = document.createElement("p");
+        precioUnitario.textContent = `Precio unitario: ${mostrarImporte(producto.precio)}`;
+
+        const filaResumen = document.createElement("li");
+        filaResumen.className = "fila-resumen-carrito";
+
+        const datosResumen = document.createElement("div");
+
+        const nombreResumen = document.createElement("strong");
+        nombreResumen.textContent = producto.nombre;
+
         const detalle = document.createElement("p");
         detalle.textContent = `${mostrarImporte(producto.precio)} × ${producto.cantidad}`;
 
         const textoSubtotal = document.createElement("p");
         textoSubtotal.textContent = `Subtotal: ${mostrarImporte(subtotal)}`;
+
+        datosResumen.append(nombreResumen, detalle);
+        filaResumen.append(datosResumen, textoSubtotal);
+        detalleResumenCarrito.appendChild(filaResumen);
 
         const botonRestar = document.createElement("button");
         botonRestar.type = "button";
@@ -78,14 +94,33 @@ function mostrarCarrito(){
             mostrarCarrito();
         });
 
-        tarjeta.append(
-            nombre,
-            detalle,
-            textoSubtotal,
-            botonRestar,
-            botonSumar,
-            botonQuitar
-        );
+        const datosProducto = document.createElement("div");
+        datosProducto.className = "datos-producto-carrito";
+        datosProducto.append(nombre, precioUnitario);
+
+        const controlesCantidad = document.createElement("div");
+        controlesCantidad.className = "cantidad-producto-carrito";
+
+        const cantidad = document.createElement("span");
+        cantidad.textContent = producto.cantidad;
+
+        controlesCantidad.append(botonRestar, cantidad, botonSumar);
+        const espacioImagen = document.createElement("div");
+        espacioImagen.className = "imagen-producto-carrito";
+
+        if (producto.imagen) {
+            const imagen = document.createElement("img");
+            imagen.alt = "";
+            imagen.addEventListener("error", () => {
+                espacioImagen.textContent = "Sin imagen";
+            });
+            imagen.src = producto.imagen;
+            espacioImagen.appendChild(imagen);
+        } else {
+            espacioImagen.textContent = "Sin imagen";
+        }
+
+        tarjeta.append(espacioImagen, datosProducto, controlesCantidad, botonQuitar);
 
         listaCarrito.appendChild(tarjeta);
     }
@@ -170,7 +205,6 @@ const nombreCliente = sessionStorage.getItem("nombreCliente");
 if(nombreCliente === null || nombreCliente.trim() === ""){
     window.location.replace("/");
 }else{
-    clienteCarrito.textContent = `Compra de ${nombreCliente}`;
     mostrarCarrito();
 }
 

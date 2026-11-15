@@ -9,19 +9,23 @@
     <script src="/js/tema.js"></script>
     <link rel="icon" href="/img/logo-loot-valley.png" type="image/png">
 </head>
-<body>
-    <header>
-        <img src="/img/logo-loot-valley.png" alt="" width="48" height="48">
-        <h1>LV - Loot Valley</h1>
-        <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+<body class="pagina-ticket">
+    <header class="cabecera-bienvenida">
+        <div class="marca-bienvenida">
+            <img src="/img/logo-loot-valley.png" alt="" width="80" height="80">
+            <div class="texto-marca-bienvenida">
+                <h1>LV - Loot Valley</h1>
+                <p>Valentina Cisneros y Lian Giaccone — Programación III</p>
+            </div>
+        </div>
 
-        <nav>
+        <nav class="acciones-bienvenida">
             <button id="salir" type="button">Salir</button>
-            <button type="button" id="cambiar-tema">Cambiar tema</button>
+            <button id="cambiar-tema" type="button">Cambiar tema</button>
         </nav>
     </header>
 
-    <main>
+    <main class="contenido-ticket">
         <h2>Ticket de compra</h2>
         <p id="mensaje-ticket" role="status">Cargando ticket...</p>
 

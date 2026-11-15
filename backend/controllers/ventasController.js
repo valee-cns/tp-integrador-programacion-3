@@ -105,7 +105,7 @@ async function obtenerVenta(req, res) {
                     include: [
                         {
                             model: Producto,
-                            attributes: ["id", "nombre"]
+                            attributes: ["id", "nombre", "imagen"]
                         }
                     ]
                 }

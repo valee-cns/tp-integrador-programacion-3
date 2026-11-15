@@ -19,12 +19,16 @@ function agregarAlCarrito(producto){
 
     if (productoExistente){
         productoExistente.cantidad++;
+        if(producto.imagen){
+            productoExistente.imagen = producto.imagen;
+        }
     }else {
         carrito.push({
             id: producto.id,
             nombre: producto.nombre,
             precio: Number(producto.precio),
-            cantidad: 1
+            cantidad: 1,
+            imagen: producto.imagen || ""
         });
     }
 
