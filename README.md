@@ -27,6 +27,37 @@ El sistema simula una tienda de productos de Magic: The Gathering y videojuegos,
 - Carga de imágenes.
 - Gestión del catálogo.
 
+
+## Capturas de la aplicación
+
+### Experiencia del cliente
+
+#### Pantalla de bienvenida
+
+La aplicación dispone de un modo claro y un modo oscuro.
+
+| Modo claro | Modo oscuro |
+| --- | --- |
+| ![Bienvenida clara](docs/screenshots/BienvenidaClaro.png) | ![Bienvenida oscura](docs/screenshots/BienvenidaOscuro.png) |
+
+#### Catálogo de productos
+
+![Catálogo de productos](docs/screenshots/Cat%C3%A1logo.png)
+
+#### Carrito de compras
+
+![Carrito de compras](docs/screenshots/Carrito.png)
+
+### Panel de administración
+
+#### Gestión del catálogo
+
+![Panel administrativo](docs/screenshots/PanelAdministrativo.png)
+
+#### Creación y edición de productos
+
+![Creación y edición de productos](docs/screenshots/EdicionCreacion.png)
+
 ## Tecnologías utilizadas
 
 | Área | Tecnologías |
